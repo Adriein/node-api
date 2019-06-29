@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
 
 router.post('/', (req,res) =>{
 
-    const userToInsert = req.body;
+    const {first_name, last_name, rol, sex, user_status} = req.body;
    
-    mysqlConnection.query('INSERT INTO client SET ?', [userToInsert], (err) =>{
+    mysqlConnection.query('INSERT INTO client SET first_name=?, last_name=?, rol=?, sex=?, user_status=?', [first_name, last_name, rol, sex, user_status], (err) =>{
         if(!err){
             res.send('inserted');
         }else{
