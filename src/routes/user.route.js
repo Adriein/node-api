@@ -5,7 +5,7 @@ const mysqlConnection = require('../database.js');
 
 router.get('/', (req, res) => {
 
-    mysqlConnection.query('SELECT * FROM employee', (err, row) =>{
+    mysqlConnection.query('SELECT * FROM client', (err, row) =>{
         if(!err){
             res.json(row);
         }else{
@@ -18,7 +18,7 @@ router.post('/', (req,res) =>{
 
     const userToInsert = req.body;
    
-    mysqlConnection.query('INSERT INTO registered_user SET ?', [userToInsert], (err) =>{
+    mysqlConnection.query('INSERT INTO client SET ?', [userToInsert], (err) =>{
         if(!err){
             res.send('inserted');
         }else{

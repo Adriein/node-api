@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //Routes
-app.use('/api/employees', require('./routes/employee.route'));
+app.use('/api/users', require('./routes/user.route'));
 
 //Static Files
 app.use(express.static(path.join(__dirname, 'public')));
