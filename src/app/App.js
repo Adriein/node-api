@@ -13,7 +13,9 @@ class App extends Component {
       rol: "2",
       sex: "",
       user_status: "1",
-      allUsers: []
+      allUsers: [],
+      editable: false,
+      selectedUser: null
     };
   }
 
@@ -59,6 +61,12 @@ class App extends Component {
     });
   };
 
+  setEditable = event => {
+    const id = event.target.id;
+    const user = this.state.allUsers.filter(users => users.id == id);
+    this.setState({editable: true, selectedUser: user})
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -73,7 +81,7 @@ class App extends Component {
           </div>
           <div className="col-9">
             <div className="row">
-              <CardContainer data={this.state.allUsers} />
+              <CardContainer data={this.state.allUsers} editable={this.state.editable} setEditable={this.setEditable} selectedUser= {this.state.selectedUser}/>
             </div>
           </div>
         </div>
