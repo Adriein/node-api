@@ -9,9 +9,11 @@ CREATE TABLE user_type (
 
 CREATE TABLE client (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    rol INT,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+	first_name VARCHAR(50),
+    last_name VARCHAR(100),
+    rol INT NOT NULL,
     sex TINYINT,
     user_status TINYINT,
     FOREIGN KEY (rol) REFERENCES user_type(id) ON DELETE CASCADE ON UPDATE CASCADE

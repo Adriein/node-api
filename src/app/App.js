@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-import Navigation from "./components/Navigation";
-import Form from "./components/Form";
-import CardContainer from "./components/CardContainer";
+import InitMode from "./main-components/InitMode";
+import EditMode from "./main-components/EditMode";
 
 class App extends Component {
   constructor() {
@@ -14,8 +13,8 @@ class App extends Component {
       sex: "",
       user_status: "1",
       allUsers: [],
-      editable: false,
-      selectedUser: null
+      selectedUser: null,
+      mode: 'init'
     };
   }
 
@@ -27,7 +26,7 @@ class App extends Component {
     try {
       const res = await fetch("/api/users");
       const users = await res.json();
-      this.setState({allUsers: users});
+      this.setState({ allUsers: users });
     } catch (err) {
       console.log(err);
     }
@@ -46,7 +45,7 @@ class App extends Component {
         }
       });
       this.getUser();
-      this.setState({ first_name: "", last_name: ""});
+      this.setState({ first_name: "", last_name: "" });
       console.log("Guardado");
     } catch (err) {
       console.log(err);
@@ -55,38 +54,34 @@ class App extends Component {
 
   handleChange = event => {
     const { name, value } = event.target;
-    console.log(value)
+    console.log(value);
     this.setState({
       [name]: value
     });
   };
 
   setEditable = event => {
+    console.log("oki");
     const id = event.target.id;
     const user = this.state.allUsers.filter(users => users.id == id);
-    this.setState({editable: true, selectedUser: user})
-  }
+    console.log(user);
+    this.setState({ mode: 'edit', selectedUser: user });
+  };
 
   render() {
-    return (
-      <div className="container-fluid">
-        <Navigation />
-        <div className="row">
-          <div className="col-3">
-            <Form
-              add={this.addUser}
-              handleChange={this.handleChange}
-              value={this.state}
-            />
-          </div>
-          <div className="col-9">
-            <div className="row">
-              <CardContainer data={this.state.allUsers} editable={this.state.editable} setEditable={this.setEditable} selectedUser= {this.state.selectedUser}/>
-            </div>
-          </div>
+    if(this.state.mode === 'init'){
+      return (
+        <div className="container-fluid">
+          <InitMode state={this.state} add={this.addUser} handleChange={this.handleChange} setEditable={this.setEditable}/>
         </div>
-      </div>
-    );
+      );
+    }else{
+      return (
+        <div className="container-fluid">
+          <EditMode state={this.state} handleChange={this.handleChange}/>
+        </div>
+      );
+    }   
   }
 }
 

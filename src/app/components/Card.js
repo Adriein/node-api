@@ -21,7 +21,9 @@ class Card extends Component {
               <p>Rol: {this.props.user.rol === 1 ? "admin" : "user"}</p>
             </div>
             <div className="col-2">
-              <span id={this.props.user.id} onClick={this.props.setEditable}>X</span>
+              <span id={this.props.user.id} onClick={this.props.setEditable}>
+                X
+              </span>
             </div>
           </div>
         </div>

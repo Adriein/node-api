@@ -1,30 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const mysqlConnection = require('../database.js');
+const Clients = require('../models/Client');
 
-router.get('/', (req, res) => {
-
-    mysqlConnection.query('SELECT * FROM client', (err, row) =>{
-        if(!err){
-            res.json(row);
-        }else{
-            console.log(err);
-        }
-    });
+router.get('/', async (req, res) => {
+    const clients = await Clients.findAll();
+    res.json(clients);
 });
 
-router.post('/', (req,res) =>{
+router.post('/', async (req,res) =>{
 
-    const {first_name, last_name, rol, sex, user_status} = req.body;
-   
-    mysqlConnection.query('INSERT INTO client SET first_name=?, last_name=?, rol=?, sex=?, user_status=?', [first_name, last_name, rol, sex, user_status], (err) =>{
-        if(!err){
-            res.send('inserted');
-        }else{
-            console.log(err);
+    const {email, password, first_name, last_name, rol, sex, user_status} = req.body;
+    try{
+        const client = Clients.create({
+            email,
+            password,
+            first_name,
+            last_name,
+            rol,
+            sex,
+            user_status
+        });
+        if(client){
+            res.json({
+                "message": "Succesfully created",
+                "data":client
+            });
         }
-    });
+    }catch(err){
+        console.log(err);
+    }
+
 });
 
 router.put('/:id', (req,res) =>{
