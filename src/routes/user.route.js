@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const Clients = require('../models/Client');
+const User = require('../models/Registered_user');
 
 router.get('/', async (req, res) => {
-    const clients = await Clients.findAll();
-    res.json(clients);
+    const users = await User.findAll();
+    res.json(users);
 });
 
 router.post('/', async (req,res) =>{
 
     const {email, password, first_name, last_name, rol, sex, user_status} = req.body;
     try{
-        const client = Clients.create({
+        const user = await User.create({
             email,
             password,
             first_name,
@@ -21,10 +21,10 @@ router.post('/', async (req,res) =>{
             sex,
             user_status
         });
-        if(client){
+        if(user){
             res.json({
                 "message": "Succesfully created",
-                "data":client
+                "data":user
             });
         }
     }catch(err){
