@@ -16,7 +16,7 @@ class MainContainer extends Component {
       user_status: "1",
       allUsers: [],
       selectedUser: null,
-      mode: "login",
+      mode: "dashboard",
       email: "",
       password: ""
     };
